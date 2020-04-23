@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using ClassLibrary;
 
 namespace Quadratic_equation
 {
@@ -41,6 +42,57 @@ namespace Quadratic_equation
         }
         private void Button1_Click(object sender, EventArgs e)
         {
+
+            QuadraticEquation answer = new QuadraticEquation(textBox_a.Text, textBox_b.Text, textBox_c.Text);
+
+            try
+            {
+                answer.Answer();
+
+                if (answer.f1)
+                {
+                    label_answer.Text = "Бесконечное количество корней";
+                }
+
+                else if (answer.f2)
+                {
+                    label_answer.Text = "Решений нет";
+                }
+
+                else if (answer.f3)
+                {
+                    label_answer.Text = "x = " + answer.X1.ToString();
+                }
+
+                else if (answer.f4)
+                {
+                    label_answer.Text = "Действительных корней нет";
+                }
+
+                else
+                {
+                    label_answer.Text = "x1 = " + answer.X1.ToString() + " x2 = " + answer.X2.ToString();
+                }
+            }
+
+            catch (MyException exc)
+            {
+                if (!exc.flag1)
+                {
+                    textBox_a.BackColor = Color.LightPink;
+                }
+
+                if (!exc.flag2)
+                {
+                    textBox_b.BackColor = Color.LightPink;
+                }
+
+                if (!exc.flag3)
+                {
+                    textBox_c.BackColor = Color.LightPink;
+                }
+            }
+
             double a = 0;
             double b = 0;
             double c = 0;
@@ -202,6 +254,17 @@ namespace Quadratic_equation
             textBox_b.BackColor = Color.White;
         }
 
+        private void TextBox_a_TextChanged(object sender, EventArgs e)
+        {
+            if (!int.TryParse(textBox_a.Text, out int str) && textBox_a.Text != String.Empty)
+            {
+
+            }
+        }
+        private void TextBox_b_TextChanged(object sender, EventArgs e)
+        {
+
+        }
         private void TextBox_c_TextChanged(object sender, EventArgs e)
         {
 
