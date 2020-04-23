@@ -1,86 +1,136 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ClassLibrary
 {
+    /// <summary>
+    /// Квадратное уравнение.
+    /// </summary>
     public class QuadraticEquation
     {
-        public double X1
-        {
-            get; set;
-        }
+        /// <summary>
+        /// 1 корень уравнения
+        /// </summary>
+        public double X1 { get; private set; }
 
-        public double X2
-        {
-            get;
-            set;
-        }
+        /// <summary>
+        /// 2 корень уравнения
+        /// </summary>
+        public double X2 { get; private set; }
+
+        /// <summary>
+        /// Коэффициент a
+        /// </summary>
+        public double A { get; set; }
+
+        /// <summary>
+        /// Коэффициент b
+        /// </summary>
+        public double B { get; set; }
+
+        /// <summary>
+        /// Коэффициент c
+        /// </summary>
+        public double C { get; set; }
+
+        /// <summary>
+        /// Проверка: x - любое число
+        /// </summary>
+        public bool IsXAnyNumber { get; private set; } = false;
+
+        /// <summary>
+        /// Проверка: неверное равенство
+        /// </summary>
+        public bool IsEquationWrong { get; private set; } = false;
+
+        /// <summary>
+        /// Проверка: корень уравнения лишь 1
+        /// </summary>
+        public bool IsXOne { get; private set; } = false;
+
+        /// <summary>
+        /// Проверка: корней нет
+        /// </summary>
+        public bool NoX { get; private set; } = false;
 
         public QuadraticEquation(string a, string b, string c)
         {
-            A = a;
-            B = b;
-            C = c;
+            NotParsedException notParsed = new NotParsedException(double.TryParse(a, out double numberA), double.TryParse(b, out double numberB), double.TryParse(c, out double numberC));
+
+            if (!notParsed.IsAParsed || !notParsed.IsBParsed || !notParsed.IsCParsed)
+            {
+                throw notParsed;
+            }
+
+            A = numberA;
+            B = numberB;
+            C = numberC;
+
+            Solve();
         }
 
         public QuadraticEquation(double a, double b, double c)
         {
-            A = a.ToString();
-            B = b.ToString();
-            C = c.ToString();
+            A = a;
+            B = b;
+            C = c;
+
+            Solve();
         }
 
-        public string A { get; }
-        public string B { get; }
-        public string C { get; }
-
-        public bool f1 { get; set; }
-        public bool f2 { get; set; }
-        public bool f3 { get; set; }
-        public bool f4 { get; set; }
-
-        public void Answer()
+        /// <summary>
+        /// Решение уравнения.
+        /// </summary>
+        private void Solve()
         {
-            MyException myException = new MyException(double.TryParse(A, out double a), double.TryParse(B, out double b), double.TryParse(C, out double c));
-
-            if (!myException.flag1 || !myException.flag2 || !myException.flag3)
+            if (A == 0)
             {
-                throw myException;
-            }
-
-            if (a == 0)
-            {
-                if (b == 0)
+                if (B == 0)
                 {
-                    if (c == 0)
+                    if (C == 0)
                     {
                         X1 = double.PositiveInfinity;
                         X2 = double.NegativeInfinity;
-                        f1 = true;
+                        IsXAnyNumber = true;
                     }
 
                     else
                     {
                         X1 = double.NaN;
                         X2 = double.NaN;
-                        f2 = true;
+                        IsEquationWrong = true;
                     }
                 }
 
                 else
                 {
-                    X1 = -c / b;
+                    X1 = Math.Round(-C / B, 3);
                     X2 = double.NaN;
-                    f3 = true;
+                    IsXOne = true;
                 }
             }
 
             else
             {
-                double D = b * b - 4 * a * c;
+                double D = (B * B) - (4 * A * C);
+
+                if (D == 0)
+                {
+                    X1 = Math.Round(-B / (2 * A), 3);
+                    X2 = Math.Round(-B / (2 * A), 3);
+                }
+
+                else if (D > 0)
+                {
+                    X1 = Math.Round((-B + Math.Sqrt(D)) / (2 * A), 3);
+                    X2 = Math.Round((-B - Math.Sqrt(D)) / (2 * A), 3);
+                }
+
+                else
+                {
+                    X1 = double.NaN;
+                    X2 = double.NaN;
+                    NoX = true;
+                }
             }
         }
     }

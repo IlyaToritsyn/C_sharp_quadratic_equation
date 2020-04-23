@@ -1,33 +1,37 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ClassLibrary
 {
-    public class MyException : Exception
+    /// <summary>
+    /// Исключение: коэффициент не пропарщен.
+    /// </summary>
+    public class NotParsedException : Exception
     {
-        public MyException(bool f1, bool f2, bool f3)
+        /// <summary>
+        /// Проверка: пропарсился ли коэффициент a
+        /// </summary>
+        public bool IsAParsed { get; }
+
+        /// <summary>
+        /// Проверка: пропарсился ли коэффициент b
+        /// </summary>
+        public bool IsBParsed { get; }
+
+        /// <summary>
+        /// Проверка: пропарсился ли коэффициент c
+        /// </summary>
+        public bool IsCParsed { get; }
+
+        public NotParsedException(bool isAParsed, bool isBParsed, bool isCParsed)
         {
-            flag1 = f1;
-            flag2 = f2;
-            flag3 = f3;
+            IsAParsed = isAParsed;
+            IsBParsed = isBParsed;
+            IsCParsed = isCParsed;
         }
 
-        public bool flag1
+        public NotParsedException(string message) : base(message)
         {
-            get;
-        }
 
-        public bool flag2
-        {
-            get;
-        }
-
-        public bool flag3
-        {
-            get;
         }
     }
 }

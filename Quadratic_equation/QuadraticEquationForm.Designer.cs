@@ -1,6 +1,6 @@
 ﻿namespace Quadratic_equation
 {
-    partial class Form1
+    partial class QuadraticEquationForm
     {
         /// <summary>
         /// Обязательная переменная конструктора.
@@ -55,7 +55,7 @@
             this.label_a.Size = new System.Drawing.Size(52, 21);
             this.label_a.TabIndex = 1;
             this.label_a.Text = "x^2 +";
-            this.label_a.Click += new System.EventHandler(this.Label1_Click);
+
             // 
             // textBox_b
             // 
@@ -82,7 +82,6 @@
             this.textBox_c.Name = "textBox_c";
             this.textBox_c.Size = new System.Drawing.Size(100, 20);
             this.textBox_c.TabIndex = 4;
-            this.textBox_c.TextChanged += new System.EventHandler(this.TextBox_c_TextChanged);
             this.textBox_c.Enter += new System.EventHandler(this.TextBox_c_Enter);
             this.textBox_c.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_c_KeyPress);
             // 
@@ -95,7 +94,7 @@
             this.button_solve.TabIndex = 5;
             this.button_solve.Text = "Решить";
             this.button_solve.UseVisualStyleBackColor = true;
-            this.button_solve.Click += new System.EventHandler(this.Button1_Click);
+            this.button_solve.Click += new System.EventHandler(this.Button_solve_Click);
             // 
             // label_answer
             // 
@@ -105,7 +104,7 @@
             this.label_answer.Name = "label_answer";
             this.label_answer.Size = new System.Drawing.Size(0, 21);
             this.label_answer.TabIndex = 6;
-            this.label_answer.Visible = false;
+            this.label_answer.Visible = true;
             // 
             // Form1
             // 
@@ -119,9 +118,9 @@
             this.Controls.Add(this.textBox_b);
             this.Controls.Add(this.label_a);
             this.Controls.Add(this.textBox_a);
-            this.Name = "Form1";
-            this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Name = "QuadraticEquationForm";
+            this.Text = "Квадратное уравнение";
+            this.Load += new System.EventHandler(this.QuadraticEquationForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
